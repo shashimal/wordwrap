@@ -3,14 +3,13 @@
 class Wordwrap
 {
 
-    /*
-      Wrap a string into new lines when it reaches a specific length
-
-      params: $string , $length
-
-      return wrapped string;
-
-   */
+    /***
+     *  Wrap a string into new lines when it reaches a specific length
+     * @param null $string
+     * @param null $length
+     * @return null|string
+     * @throws Exception
+     */
     public function wrap($string = null, $length = null)
     {
 
@@ -26,7 +25,7 @@ class Wordwrap
         $array = null;
 
         if (!empty($splitWords) && is_array($splitWords)) {
-            //Track the length of current line
+            //track the length of current line
             $currentLineLength = 0;
 
             foreach ($splitWords as $key => $word) {
@@ -64,14 +63,11 @@ class Wordwrap
         return trim($wrappedString);
     }
 
-    /*
-        Given string is converted into an array
-
-        params: $string
-
-        return array of words;
-
-    */
+    /***
+     * Given string is converted into an array
+     * @param $string
+     * @return array|null
+     */
     private function splitToWordsArray($string)
     {
         $words = null;
@@ -83,12 +79,11 @@ class Wordwrap
         return $words;
     }
 
-    /*
-       Validate the string
-
-        params: $string
-
-   */
+    /***
+     * Validate the string
+     * @param $string
+     * @throws Exception
+     */
     private function validateString($string)
     {
         if (empty($string)) {
@@ -96,12 +91,11 @@ class Wordwrap
         }
     }
 
-    /*
-     Validate the string length
-
-     params: $length
-
- */
+    /***
+     * Validate the string length
+     * @param $length
+     * @throws Exception
+     */
     private function validateStringLength($length)
     {
         if (empty($length)) {
