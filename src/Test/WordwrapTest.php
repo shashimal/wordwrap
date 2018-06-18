@@ -62,14 +62,9 @@ class WordwrapTest extends TestCase{
         $this->assertEquals("Hello World", $result);
     }
 
-    function test_exception_for_empty_string() {
-        $exceptionMessage = null;
-        try {
-            $this->wordwrap->wrap("",8);
-        } catch (Exception $e) {
-            $exceptionMessage = $e->getMessage();
-        }
-        $this->assertEquals($exceptionMessage, "String value can't be empty");
+    public function test_string_with_empty_string() {
+        $result = $this->wordwrap->wrap("0");
+        $this->assertEquals("0", $result);
     }
 
 }

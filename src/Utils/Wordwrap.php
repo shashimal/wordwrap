@@ -13,9 +13,7 @@ class Wordwrap
     public function wrap($string = null, $length = null)
     {
 
-        $this->validateString($string);
-
-        if (empty($length)) {
+        if (empty($length) || empty($string)) {
             return $string;
         }
 
@@ -77,29 +75,5 @@ class Wordwrap
         }
 
         return $words;
-    }
-
-    /***
-     * Validate the string
-     * @param $string
-     * @throws Exception
-     */
-    private function validateString($string)
-    {
-        if (empty($string)) {
-            throw  new Exception("String value can't be empty");
-        }
-    }
-
-    /***
-     * Validate the string length
-     * @param $length
-     * @throws Exception
-     */
-    private function validateStringLength($length)
-    {
-        if (empty($length)) {
-            throw  new Exception("Length should be greater than 0");
-        }
     }
 }
