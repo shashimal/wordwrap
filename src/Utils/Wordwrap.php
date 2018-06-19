@@ -3,6 +3,9 @@
 class Wordwrap
 {
 
+    const ENCODING_FORMAT = "UTF-8";
+    const NEW_LINE= "\n";
+
     /***
      *  Wrap a string into new lines when it reaches a specific length
      * @param null $string
@@ -18,47 +21,60 @@ class Wordwrap
         }
 
         $splitWords = $this->splitToWordsArray($string);
-
-        $wrappedString = "";
-        $array = null;
+        $outputWords = null;
 
         if (!empty($splitWords) && is_array($splitWords)) {
             //track the length of current line
             $currentLineLength = 0;
 
+            $index = 0;
             foreach ($splitWords as $key => $word) {
 
-                if ($currentLineLength + mb_strlen($word, 'UTF-8') > $length) {
-
+                if ($currentLineLength + mb_strlen($word, self::ENCODING_FORMAT) > $length) {
                     //move to the next line when the current line has reached to the maximum length
                     if ($currentLineLength > 0) {
-                        $wrappedString .= "\n";
+
+                        if (count($outputWords) != 0) {
+                            $outputWords[$index - 1] .= self::NEW_LINE;
+                        }
+
                         $currentLineLength = 0;
                     }
 
                     //break a word if it is longer than $length characters
-                    while (mb_strlen($word, 'UTF-8') > $length) {
-                        $wrappedString .= mb_substr($word, 0, $length, 'UTF-8');
-                        $word = mb_substr($word, $length, null, 'UTF-8');
-                        $wrappedString .= "\n";
+                    while (mb_strlen($word, self::ENCODING_FORMAT) > $length) {
+                        if (count($outputWords) != 0) {
+                            $outputWords[$index - 1] .= mb_substr($word, 0, $length, self::ENCODING_FORMAT);
+                            $outputWords[$index - 1] .= self::NEW_LINE;
+                        } else {
+                            $outputWords[$index] .= mb_substr($word, 0, $length, self::ENCODING_FORMAT);
+                            $outputWords[$index] .= self::NEW_LINE;
+                        }
+
+                        $index += 1;
+
+                        $word = mb_substr($word, $length, null, self::ENCODING_FORMAT);
                     }
 
                     $word = ltrim($word);
                 }
 
-                if ($currentLineLength + mb_strlen($word, 'UTF-8') == $length) {
-                    $wrappedString .= $word;
+                if ($currentLineLength + mb_strlen($word, self::ENCODING_FORMAT) == $length) {
+                    $outputWords[$index] .= $word;
                 } else {
-                    $wrappedString .= $word . " ";
+                    $outputWords[$index] .= $word . " ";
                 }
+                $index += 1;
 
-                $currentLineLength += mb_strlen($word, 'UTF-8') + 1;
+                $currentLineLength += mb_strlen($word, self::ENCODING_FORMAT) + 1;
             }
         } else {
             throw new Exception("Invalid String");
         }
 
-        return trim($wrappedString);
+        $wrappedString = $this->buildWrappedString($outputWords);
+
+        return $wrappedString;
     }
 
     /***
@@ -75,5 +91,33 @@ class Wordwrap
         }
 
         return $words;
+    }
+
+    /***
+     * Build the wrapped string using output words
+     * @param $outputWords
+     * @return string
+     */
+    private function buildWrappedString($outputWords)
+    {
+        $str = "";
+        $size = count($outputWords);
+        $i = 0;
+        if ($size > 0) {
+            foreach ($outputWords as $value) {
+                if ($size - 1 == $i) {
+                    $value = trim($value);
+                }
+
+                if (strstr($value, self::NEW_LINE)) {
+                    $str .= str_replace(" ", "", $value);
+                } else {
+                    $str .= $value;
+                }
+
+                $i++;
+            }
+        }
+        return $str;
     }
 }
