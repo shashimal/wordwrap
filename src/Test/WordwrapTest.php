@@ -1,10 +1,4 @@
-p\'i86b n<?php
-/**
- * Created by PhpStorm.
- * User: duleendra
- * Date: 6/13/18
- * Time: 9:56 PM
- */
+<?php
 
 use PHPUnit\Framework\TestCase;
 
