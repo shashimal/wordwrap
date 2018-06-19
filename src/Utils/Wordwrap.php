@@ -4,7 +4,7 @@ class Wordwrap
 {
 
     const ENCODING_FORMAT = "UTF-8";
-    const NEW_LINE= "\n";
+    const NEW_LINE = "\n";
 
     /***
      *  Wrap a string into new lines when it reaches a specific length
@@ -88,6 +88,7 @@ class Wordwrap
 
         if (!empty($string)) {
             $words = explode(" ", $string);
+            //$words =  preg_split( '/[\t\s]/', $string );
         }
 
         return $words;
