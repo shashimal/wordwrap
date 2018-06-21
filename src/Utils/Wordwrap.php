@@ -87,8 +87,10 @@ class Wordwrap
         $words = null;
 
         if (!empty($string)) {
+            $string = str_replace("\n"," ",$string);
             $words = explode(" ", $string);
-            //$words =  preg_split( '/[\t\s]/', $string );
+            //$words =  preg_split( '/[\n\s\t]/', $string );
+            print_r($words);
         }
 
         return $words;
