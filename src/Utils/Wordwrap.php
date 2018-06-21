@@ -87,10 +87,9 @@ class Wordwrap
         $words = null;
 
         if (!empty($string)) {
-            $string = str_replace("\n"," ",$string);
-            $words = explode(" ", $string);
-            //$words =  preg_split( '/[\n\s\t]/', $string );
-            print_r($words);
+            //$words = explode(" ", $string);
+            //$words =  preg_split( '/[\n\s]/', $string );
+            $words = $this->multiExplode(array(" ", "\n","\t"), $string);
         }
 
         return $words;
@@ -122,5 +121,12 @@ class Wordwrap
             }
         }
         return $str;
+    }
+
+    function multiExplode($delimiters, $string)
+    {
+        $normalisedString = str_replace($delimiters, $delimiters[0], $string);
+        $explodedArray = explode($delimiters[0], $normalisedString);
+        return $explodedArray;
     }
 }

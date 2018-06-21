@@ -109,16 +109,17 @@ class WordwrapTest extends TestCase
         $this->assertEquals("Privileged\nto hear in\nperson\nfrom the\nlegendary\njourno,\nBob\nWoodward", $result);
     }
 
-    public function test()
+    public function test_string_with_one_newline()
     {
         $result = $this->wordwrap->wrap("test\ntest", 3);
         $this->assertEquals("tes\nt\ntes\nt", $result);
     }
 
-   /* public function test_with_tabs()
-     {
-         $result = $this->wordwrap->wrap("word  word    word", 16);
-         $this->assertEquals("word  word\nword", $result);
-     }*/
+
+    public function test_string_with_newline()
+    {
+        $result = $this->wordwrap->wrap("test\n\ntest", 4);
+        $this->assertEquals("test\n\ntest", $result);
+    }
 
 }
