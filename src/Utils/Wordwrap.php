@@ -21,7 +21,7 @@ class Wordwrap
         }
 
         $splitWords = $this->splitToWordsArray($string);
-        $outputWords = null;
+        $outputWords = array();
 
         if (!empty($splitWords) && is_array($splitWords)) {
             //track the length of current line
